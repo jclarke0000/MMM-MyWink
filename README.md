@@ -1,4 +1,4 @@
-#MMM-MyWink
+# MMM-MyWink
 
 This a module for <strong>MagicMirror</strong><br>
 https://magicmirror.builders/<br>
@@ -12,7 +12,7 @@ This module displays current status of locks and garage doors connected to your 
 `git clone https://github.com/jclarke0000/MMM-MyWink.git`
 2. Enter the new `MMM-MyWink` directory and execute `npm install`.
 
-##Configuration
+## Configuration
 
 You'll need to request a clinet ID and client secret from the folks at Wink.  Do that here:
 https://developer.wink.com/clients
