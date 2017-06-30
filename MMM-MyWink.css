@@ -1,0 +1,56 @@
+.MMM-MyWink .device-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+}
+
+.MMM-MyWink .device-container {
+  text-align: center;
+  min-width: 100px;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.MMM-MyWink .device-name {
+  display: block;
+  font-size: 20px;
+  line-height: 22px;
+  text-align: center;
+  color: #FFF;
+  width: 50px;
+  margin: auto;
+}
+
+.MMM-MyWink .icon-container {
+  color: #FFF;
+  display: block;
+  text-align: center;
+}
+
+.MMM-MyWink .device-container.closed .icon-container,
+.MMM-MyWink .device-container.locked .icon-container {  
+  color: #a3ea80;
+}
+.MMM-MyWink .device-container.open .icon-container,
+.MMM-MyWink .device-container.unlocked .icon-container {  
+  color: #ff5a44;
+}
+
+.MMM-MyWink .device-status {
+  display: block;
+  font-size: 17px;
+  line-height: 20px;
+  text-align: center;
+}
+
+
+.MMM-MyWink .icon-container .icon {
+  width: 48px;
+  height: 48px;
+  fill: currentColor;
+  display: block;
+  margin: 8px auto;
+}
