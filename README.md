@@ -45,7 +45,7 @@ It will take a few days to get your ID and secret via email.
     </tr>
     <tr>
       <td><code>pollFrequency</code></td>
-      <td>How often to poll for updates<br><br><strong>Type</strong> <code>Number</code><br>Defaults to every 30 seconds.</td>
+      <td>How often to poll for updates<br><br><strong>Type</strong> <code>Number</code><br>Defaults to <code>30 * 1000</code> (i.e.: every 30 seconds)</td>
     </tr>
   </tbody>
 </table>
