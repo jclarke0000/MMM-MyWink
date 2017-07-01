@@ -52,6 +52,11 @@ module.exports = NodeHelper.create({
 
     wink.user().devices(function(data) {
 
+      if (data == undefined) {
+        self.authorize();
+        return;
+      }
+
       //filter to locks and garage doors
       var filteredDevices = data.data.filter(function(device) {
         return (device.object_type == "lock" || device.object_type == "garage_door");
