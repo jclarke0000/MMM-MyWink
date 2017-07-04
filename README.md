@@ -14,7 +14,7 @@ This module displays current status of locks and garage doors connected to your 
 
 ## Configuration
 
-You'll need to request a clinet ID and client secret from the folks at Wink.  Do that here:
+You'll need to request a Client ID and Client Secret from the folks at Wink.  Do that here:
 https://developer.wink.com/clients
 
 It will take a few days to get your ID and secret via email.
