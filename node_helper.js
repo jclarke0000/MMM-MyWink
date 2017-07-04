@@ -210,9 +210,20 @@ module.exports = NodeHelper.create({
     to the front end in the same circumstance.
   */
   deviceUpdate: function(rawData) {
+
     var updateData = JSON.parse(rawData);
+
+    var deviceId;
+    if (updateData.object_id) {
+      deviceId = updateData.object_id;
+    } else if (updateData.lock_id) {
+      deviceId = updateData.lock_id;
+    } else if (updateData.garage_door_id) {
+      deviceId = updateData.garage_door_id;
+    }
+
     var device = this.deviceList.find(function(device) {
-      return device.id == updateData.object_id;
+      return device.id == deviceId;
     });
 
     var deviceChanged = false;
