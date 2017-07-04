@@ -1,14 +1,12 @@
 {
-  "name": "mmmmywink",
+  "name": "mmm-mywink",
   "version": "1.0.0",
   "description": "Magic Mirror Module to interface with home automation devices connected to the Wink Hub.",
   "main": "MMM-MyWink.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Jeff Clarke",
   "license": "MIT",
   "dependencies": {
+    "pubnub": "^4.12.0",
     "wink-jsv2": "0.0.3"
   }
 }

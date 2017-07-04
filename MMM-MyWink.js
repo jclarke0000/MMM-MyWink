@@ -1,18 +1,30 @@
-Module.register('MMM-MyWink', {
+/*
 
-  defaults: {
-    pollFrequency: 30 * 1000, //2 minutes;
-  },
+  MMM-MyWink
+  -------------------------------------------
+  by Jeff Clarke
+  https://github.com/jclarke0000/MMM-MyWink
+  Lisense: MIT
+
+  MagicMirror module to monitor and display the status of
+  door locks and garage doors connected to your Wink hub.
+  Wink API client_id and client_secret keys are required.
+  Resuest them at https://developer.wink.com/clients.
+
+  This module contacts the Wink API to determine the initial
+  status of your devices, then subscribes to PubNub to listen
+  for changes in their state
+
+*/
+
+Module.register('MMM-MyWink', {
 
   start: function() {
     this.loaded = false;
     this.devices = [];
 
-    this.sendSocketNotification("MMM-MYWINK-GET", this.config);
-    var self = this;
-    setInterval(function() {
-      self.sendSocketNotification("MMM-MYWINK-GET", self.config);
-    }, this.config.pollFrequency);
+    this.sendSocketNotification("MMM-MYWINK-GET-INITIAL-STATUS", this.config);
+
   },
 
   getStyles: function () {
@@ -21,7 +33,7 @@ Module.register('MMM-MyWink', {
 
   socketNotificationReceived: function(notification, payload) {
     //only update if a data set is returned.  Otherwise leave stale data on the screen.
-    if ( notification === 'MMM-MYWINK-RESPONSE') {
+    if ( notification === 'MMM-MYWINK-DEVICE-UPDATE') {
       this.devices = payload.data;
       if (this.loaded) {
         this.updateDom();      
@@ -59,8 +71,18 @@ Module.register('MMM-MyWink', {
 
     this.devices.forEach(function(device) {
 
+      var status;
+      switch (device.type) {
+        case "lock":
+          status = device.status == true ? "Locked" : "Unlocked";
+          break;
+        case "garage_door":
+          status = device.status == 1 ? "Open" : "Closed";
+          break;
+      }
+
       var deviceContainer = document.createElement("div");
-      deviceContainer.classList.add("device-container", device.status.toLowerCase());
+      deviceContainer.classList.add("device-container", status.toLowerCase());
 
       var deviceName = document.createElement("span");
       deviceName.classList.add("device-name");
@@ -69,12 +91,12 @@ Module.register('MMM-MyWink', {
 
       var iconContainer = document.createElement("span");
       iconContainer.classList.add("icon-container");
-      iconContainer.appendChild(self.svgIconFactory(device.type.toLowerCase() + "_" + device.status.toLowerCase()));
+      iconContainer.appendChild(self.svgIconFactory(device.type.toLowerCase() + "_" + status.toLowerCase()));
       deviceContainer.appendChild(iconContainer);
 
       var deviceStatus = document.createElement("span");
       deviceStatus.classList.add("device-status");
-      deviceStatus.innerHTML = device.status;
+      deviceStatus.innerHTML = status;
       deviceContainer.appendChild(deviceStatus);
 
 

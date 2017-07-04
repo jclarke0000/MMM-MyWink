@@ -12,6 +12,7 @@
   min-width: 100px;
   flex-grow: 0;
   flex-shrink: 0;
+  margin-bottom: 20px;
 }
 
 .MMM-MyWink .device-name {

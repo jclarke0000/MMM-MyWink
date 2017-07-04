@@ -43,10 +43,6 @@ It will take a few days to get your ID and secret via email.
       <td><code>password</code></td>
       <td><strong>REQUIRED</strong> Your Wink password<br><br><strong>Type</strong> <code>String</code></td>
     </tr>
-    <tr>
-      <td><code>pollFrequency</code></td>
-      <td>How often to poll for updates<br><br><strong>Type</strong> <code>Number</code><br>Defaults to <code>30 * 1000</code> (i.e.: every 30 seconds)</td>
-    </tr>
   </tbody>
 </table>
 
