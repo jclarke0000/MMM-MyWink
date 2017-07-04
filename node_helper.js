@@ -6,6 +6,7 @@ module.exports = NodeHelper.create({
     moduleInstance = this;
     this.isAuthorized = false;
     process.env.WINK_NO_CACHE = true;
+    this.lastData = null;
   },
 
   socketNotificationReceived: function(notification, payload){
@@ -52,35 +53,44 @@ module.exports = NodeHelper.create({
 
     wink.user().devices(function(data) {
 
-      if (data == undefined) {
-        self.authorize();
-        return;
-      }
-
       //filter to locks and garage doors
       var filteredDevices = data.data.filter(function(device) {
         return (device.object_type == "lock" || device.object_type == "garage_door");
       });
 
       var devicesToReturn = [];
-      filteredDevices.forEach(function(device) {
-        var status;
-        switch (device.object_type) {
-          case "lock":
-            status = device.last_reading.locked ? "Locked" : "Unlocked";
-            break;
-          case "garage_door":
-            status = device.last_reading.position == 1 ? "Open" : "Closed";
-            break;
+      filteredDevices.forEach(function(device, index) {
+
+        try {
+
+          var status;
+          switch (device.object_type) {
+            case "lock":
+              status = device.last_reading.locked ? "Locked" : "Unlocked";
+              break;
+            case "garage_door":
+              status = device.last_reading.position == 1 ? "Open" : "Closed";
+              break;
+          }
+
+          devicesToReturn.push({
+            name: device.name,
+            type: device.object_type,
+            status: status
+          });
+
+        } catch (err) {
+          console.log("[MMM-MyWink] **Error** Couldn't get status of " + device.name + ": " + err.message);
+
+          if (self.lastData != null) {
+            //fill will the last known state.
+            devicesToReturn.push(new Object(self.lastData[index]));
+          }
         }
 
-        devicesToReturn.push({
-          name: device.name,
-          type: device.object_type,
-          status: status
-        });
-
       });
+
+      self.lastData = devicesToReturn;
 
       self.sendSocketNotification('MMM-MYWINK-RESPONSE', {data: devicesToReturn});
 
