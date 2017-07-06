@@ -17,6 +17,7 @@
 
 */
 
+var NodeHelper = require('node_helper');
 var wink = require('wink-jsv2');
 var PubNub = require('pubnub');
 
